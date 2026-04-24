@@ -1,7 +1,7 @@
 package ovh.fsp.javaspringfx.navigation
 
-import javafx.scene.layout.Pane
+import javafx.scene.Parent
 
 interface IView {
-    fun createUI(): Pane
+    fun createUI(): Parent
 }

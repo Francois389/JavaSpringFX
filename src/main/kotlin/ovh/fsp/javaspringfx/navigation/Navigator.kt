@@ -17,7 +17,7 @@ class Navigator(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     private val contentPane: StackPane = StackPane()
-    private var currentView: Pane? = null
+    private var currentView: Parent? = null
 
     fun getRoot(): Parent {
         return contentPane
