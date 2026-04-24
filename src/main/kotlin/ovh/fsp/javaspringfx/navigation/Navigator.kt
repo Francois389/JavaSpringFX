@@ -1,7 +1,6 @@
 package ovh.fsp.javaspringfx.navigation
 
 import javafx.scene.Parent
-import javafx.scene.layout.Pane
 import javafx.scene.layout.StackPane
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeansException
@@ -27,15 +26,22 @@ class Navigator(
     fun <T : IView> navigateTo(viewClass: KClass<T>) {
         currentView?.let { contentPane.children.remove(it) }
 
-        val view = try {
-            applicationContext.getBean(viewClass.java)
-        } catch (e: BeansException) {
-            logger.error("Failed to navigate to view ${viewClass.simpleName}")
-            throw e
-        }
-        val uiPane = view.createUI()
+        val uiPane = findView(viewClass)
 
         contentPane.children.add(uiPane)
         currentView = uiPane
     }
+
+    fun <T : IView> findView(viewClass: KClass<T>): Parent {
+        val view = try {
+            applicationContext.getBean(viewClass.java)
+        } catch (e: BeansException) {
+            logger.error("View ${viewClass.simpleName} not found in applicationContext.")
+            throw e
+        }
+        val uiPane = view.createUI()
+        return uiPane
+    }
+
+
 }
