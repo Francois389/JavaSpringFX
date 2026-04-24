@@ -38,7 +38,7 @@ class FxLauncher : Application() {
 
     override fun start(stage: Stage) {
         val navigator = springContext.getBean<Navigator>()
-        val rootPane = navigator.initializeRoot()
+        val rootPane = navigator.getRoot()
 
         onStart(navigator)
 
