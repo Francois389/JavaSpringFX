@@ -197,3 +197,11 @@ class UserViewModel(private val userRepository: UserRepository) {
 **Apache License 2.0**
 
 JavaSpringFX est distribué sous la [Apache License 2.0](LICENSE).
+
+---
+
+## Mentions légales
+
+JavaSpringFX est un projet indépendant et n'est pas affilié à VMware, Inc. ni approuvé par VMware, Inc.
+Spring est une marque déposée de VMware, Inc.
+JavaFX est une marque déposée d'Oracle Corporation.
