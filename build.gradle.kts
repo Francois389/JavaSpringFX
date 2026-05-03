@@ -6,7 +6,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "ovh.fsp"
+group = "io.github.francois389"
 version = "0.1.0"
 
 repositories {

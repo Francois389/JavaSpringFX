@@ -1,6 +1,6 @@
-package ovh.fsp.javaspringfx
+package io.github.francois389.javaspringfx
 
-import ovh.fsp.javaspringfx.navigation.Navigator
+import io.github.francois389.javaspringfx.navigation.Navigator
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.Scene

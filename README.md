@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    implementation("ovh.fsp:javaspringfx:0.1.0")
+    implementation("io.github.francois389:javaspringfx:0.1.0")
 }
 
 kotlin {
@@ -50,7 +50,7 @@ Si vous avez déjà un projet JavaFX, ajoutez simplement la dépendance dans vot
 
 ```kotlin
 dependencies {
-    implementation("ovh.fsp:javaspringfx:0.1.0")
+    implementation("io.github.francois389:javaspringfx:0.1.0")
 }
 ```
 
@@ -159,7 +159,7 @@ JavaSpringFX étant basé sur Spring Boot, vous pouvez ajouter n'importe quelle 
 
 ```kotlin
 dependencies {
-    implementation("ovh.fsp:javaspringfx:0.1.0")
+    implementation("io.github.francois389:javaspringfx:0.1.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.postgresql:postgresql")
 }
