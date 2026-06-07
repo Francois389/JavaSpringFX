@@ -9,7 +9,6 @@ plugins {
 }
 
 group = "io.github.francois389"
-
 version = System.getenv("VERSION")
     ?: runCatching {
         val tag = providers.exec {
@@ -77,7 +76,6 @@ publishing {
         }
     }
 }
-
 
 nmcp {
     centralPortal {
