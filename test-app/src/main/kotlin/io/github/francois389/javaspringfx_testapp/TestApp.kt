@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 @SpringBootApplication
 class TestApp
 
-fun main() = launchApp<TestApp>(title = "TestApp") { navigator ->
-    navigator.navigateTo(TestView::class)
-}
+fun main() = launchApp<TestApp>(
+    title = "TestApp",
+    icons = listOf("/Test-Logo.png"),
+    startingView = TestView::class
+)
