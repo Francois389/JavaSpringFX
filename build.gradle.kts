@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 
-val springBootVersion = "4.0.5"
+val springBootVersion = "4.0.6"
 
 dependencies {
     api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
@@ -72,8 +72,8 @@ publishing {
 
     nmcp {
         centralPortal {
-            username = project.findProperty("mavenCentralUsername") as String
-            password = project.findProperty("mavenCentralPassword") as String
+            username = project.findProperty("mavenCentralUsername") as? String
+            password = project.findProperty("mavenCentralPassword") as? String
             publishingType = "USER_MANAGED"
         }
     }
