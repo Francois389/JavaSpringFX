@@ -9,7 +9,14 @@ plugins {
 }
 
 group = "io.github.francois389"
-version = "0.1.0"
+
+version = System.getenv("VERSION")
+    ?: runCatching {
+        val tag = providers.exec {
+            commandLine("git", "describe", "--tags", "--exact-match")
+        }.standardOutput.asText.get().trim()
+        tag.removePrefix("v")
+    }.getOrElse { "0.0.0-SNAPSHOT" }
 
 repositories {
     mavenCentral()
@@ -69,17 +76,23 @@ publishing {
             }
         }
     }
+}
 
-    nmcp {
-        centralPortal {
-            username = project.findProperty("mavenCentralUsername") as? String
-            password = project.findProperty("mavenCentralPassword") as? String
-            publishingType = "USER_MANAGED"
-        }
+
+nmcp {
+    centralPortal {
+        username = providers.gradleProperty("mavenCentralUsername").orNull
+        password = providers.gradleProperty("mavenCentralPassword").orNull
+        publishingType = "USER_MANAGED"
     }
 }
 
 signing {
+    val signingKey = providers.gradleProperty("signingInMemoryKey").orNull
+    val signingPassword = providers.gradleProperty("signingInMemoryKeyPassword").orNull
+    if (signingKey != null) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
     sign(publishing.publications["maven"])
 }
 
