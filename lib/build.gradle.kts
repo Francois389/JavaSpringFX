@@ -45,6 +45,8 @@ javafx {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            artifactId = "javaspringfx"
+
             from(components["java"])
 
             pom {
