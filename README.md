@@ -1,5 +1,7 @@
 # JavaSpringFX
 
+[![Maven](https://badges.mvnrepository.com/badge/io.github.francois389/javaspringfx/badge.svg?label=Maven)](https://mvnrepository.com/artifact/io.github.francois389/javaspringfx)
+
 JavaSpringFX est une librairie Kotlin qui intègre **Spring Boot** et **JavaFX** pour faciliter le développement
 d'applications desktop selon le pattern **MVVM**.
 
