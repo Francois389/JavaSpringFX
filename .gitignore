@@ -7,3 +7,7 @@
 /gradlew
 /gradlew.bat
 /.idea/libraries/
+/test-app/.gradle
+/test-app/.idea
+/test-app/build
+/lib/build

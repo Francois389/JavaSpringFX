@@ -1,13 +1,16 @@
 package io.github.francois389.javaspringfx
 
+import io.github.francois389.javaspringfx.navigation.IView
 import io.github.francois389.javaspringfx.navigation.Navigator
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.stage.Stage
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.SpringApplication
 import org.springframework.context.ConfigurableApplicationContext
+import kotlin.reflect.KClass
 
 lateinit var appClass: Class<*>
 var appTitle: String = "JavaSpringFX App"
@@ -28,6 +31,9 @@ inline fun <reified T : Any> launchApp(
     onStart = start
     Application.launch(FxLauncher::class.java)
 }
+
+
+
 
 class FxLauncher : Application() {
     private lateinit var springContext: ConfigurableApplicationContext

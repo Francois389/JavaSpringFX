@@ -1,6 +1,7 @@
 # JavaSpringFX
 
-JavaSpringFX est une librairie Kotlin qui intègre **Spring Boot** et **JavaFX** pour faciliter le développement d'applications desktop selon le pattern **MVVM**.
+JavaSpringFX est une librairie Kotlin qui intègre **Spring Boot** et **JavaFX** pour faciliter le développement
+d'applications desktop selon le pattern **MVVM**.
 
 Elle résout deux problèmes récurrents :
 
@@ -19,7 +20,7 @@ Voici un `build.gradle.kts` complet pour démarrer un projet avec JavaSpringFX :
 plugins {
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.spring") version "2.1.20"
-    id("org.springframework.boot") version "3.4.4"
+    id("org.springframework.boot") version "4.0.6"
     id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
@@ -35,14 +36,21 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 javafx {
-    version = "21"
+    version = "26"
     modules("javafx.controls", "javafx.fxml")
 }
 ```
+
+> **Prérequis :**
+> Si vous utilisez la version 26 de JavaFX, alors Java 24+ est requis (JavaFX 26 est compilé avec Java 24).
+>
+> Dans le reste de la documentation, les exemples utilisent JavaFX 26 et Java 24. Si vous souhaitez utiliser une version
+> plus ancienne de JavaFX, assurez-vous d'utiliser une version compatible de Java et de configurer le plugin JavaFX en
+> conséquence.
 
 ### Projet existant
 
@@ -54,7 +62,8 @@ dependencies {
 }
 ```
 
-Assurez-vous également d'avoir les plugins `kotlin("plugin.spring")` et `org.openjfx.javafxplugin` dans votre bloc `plugins`, et le repository `mavenCentral()` déclaré.
+Assurez-vous également d'avoir les plugins `kotlin("plugin.spring")` et `org.openjfx.javafxplugin` dans votre bloc
+`plugins`, et le repository `mavenCentral()` déclaré.
 
 ---
 
@@ -62,9 +71,29 @@ Assurez-vous également d'avoir les plugins `kotlin("plugin.spring")` et `org.op
 
 ### Point d'entrée
 
-La librairie fournit la fonction `launchApp<T>()` qui démarre Spring Boot et JavaFX ensemble. `T` est votre classe annotée `@SpringBootApplication`.
+La librairie fournit la fonction `launchApp<T>()` qui démarre Spring Boot et JavaFX ensemble. `T` est votre classe
+annotée `@SpringBootApplication`.
+
+En raison des contraintes du système de modules Java, le `mainClass` Gradle doit pointer vers une classe launcher
+distincte qui appelle votre `main()` :
 
 ```kotlin
+// Launcher.kt
+object Launcher {
+    @JvmStatic
+    fun main(args: Array<String>) = main()
+}
+```
+
+```kotlin
+// build.gradle.kts
+application {
+    mainClass.set("com.example.Launcher")
+}
+```
+
+```kotlin
+// App.kt
 @SpringBootApplication
 class MyApp
 
@@ -91,7 +120,8 @@ Les paramètres `title`, `width` et `height` sont optionnels et ont les valeurs 
 
 ### `@View` — Définir une vue
 
-Annotez vos classes de vue avec `@View`. Elles doivent implémenter l'interface `IView` et définir leur interface via la méthode `createUI()`.
+Annotez vos classes de vue avec `@View`. Elles doivent implémenter l'interface `IView` et définir leur interface via la
+méthode `createUI()`.
 
 Le ViewModel est injecté automatiquement par Spring via le constructeur.
 
@@ -108,13 +138,15 @@ class MainView(private val viewModel: MainViewModel) : IView {
 }
 ```
 
-> La méthode `createUI()` est appelée à chaque navigation vers la vue. Il n'y a pas de cache : la vue est reconstruite à chaque fois.
+> La méthode `createUI()` est appelée à chaque navigation vers la vue. Il n'y a pas de cache : la vue est reconstruite à
+> chaque fois.
 
 ---
 
 ### `@ViewModel` — Définir un ViewModel
 
-Annotez vos ViewModels avec `@ViewModel`. Ils exposent des propriétés observables JavaFX (`Property`) et contiennent la logique métier. Les services et repositories Spring y sont injectés automatiquement.
+Annotez vos ViewModels avec `@ViewModel`. Ils exposent des propriétés observables JavaFX (`Property`) et contiennent la
+logique métier. Les services et repositories Spring y sont injectés automatiquement.
 
 ```kotlin
 @ViewModel
@@ -131,7 +163,8 @@ class MainViewModel(private val userService: UserService) {
 
 ### Navigation
 
-Le `Navigator` est un bean Spring disponible par injection. Il permet de naviguer vers n'importe quelle vue à partir de sa classe, sans référencer les autres vues.
+Le `Navigator` est un bean Spring disponible par injection. Il permet de naviguer vers n'importe quelle vue à partir de
+sa classe, sans référencer les autres vues.
 
 ```kotlin
 @View
@@ -192,6 +225,22 @@ class UserViewModel(private val userRepository: UserRepository) {
 
 ---
 
+## Application de test
+
+Le dépôt inclut une application de démonstration dans le dossier [`test-app/`](test-app/). Elle illustre l'utilisation
+concrète de la librairie (navigation, injection de dépendances, structure MVVM) et sert de référence pour démarrer un
+nouveau projet.
+
+Pour la lancer depuis la racine du projet :
+
+```bash
+./gradlew :test-app:run
+```
+
+> **Prérequis :** Java 25+ doit être installé et configuré (`JAVA_HOME` pointant vers un JDK 24).
+
+---
+
 ## Licence
 
 **Apache License 2.0**
@@ -204,4 +253,5 @@ JavaSpringFX est distribué sous la [Apache License 2.0](LICENSE).
 
 JavaSpringFX est un projet indépendant et n'est pas affilié à VMware, Inc. ni approuvé par VMware, Inc.
 Spring est une marque déposée de VMware, Inc.
+
 JavaFX est une marque déposée d'Oracle Corporation.
